@@ -16,7 +16,6 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 public class NearActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -69,6 +68,8 @@ public class NearActivity extends FragmentActivity implements OnMapReadyCallback
 
         Log.d(tag, "lat ==> " + latADouble);
         Log.d(tag, "lng ==> " + lngADouble);
+
+        createCenterMap();
 
 
     }   // onResume
@@ -151,10 +152,18 @@ public class NearActivity extends FragmentActivity implements OnMapReadyCallback
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        //Create Center Map and Marker User
+        createCenterMap();
+
     }   // onMap
+
+    private void createCenterMap() {
+        try {
+            LatLng latLng = new LatLng(latADouble, lngADouble);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }   // Main Class
