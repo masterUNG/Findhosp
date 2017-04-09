@@ -15,7 +15,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 public class NearActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -159,11 +161,30 @@ public class NearActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void createCenterMap() {
         try {
+            //Create Map
             LatLng latLng = new LatLng(latADouble, lngADouble);
             mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, 16));
+
+            //Clear Marker
+            mMap.clear();
+
+            //Create Marker
+            createMarker(latLng, R.mipmap.ic_user, "คุณอยู่ที่นี่", "ในขณะนี่คุณอยู่ที่นี่ คะ");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void createMarker(LatLng latLng,
+                              int intIcon,
+                              String strTitle,
+                              String strDetail) {
+        mMap.addMarker(new MarkerOptions()
+        .position(latLng)
+        .icon(BitmapDescriptorFactory.fromResource(intIcon))
+        .title(strTitle)
+        .snippet(strDetail));
     }
 
 }   // Main Class
